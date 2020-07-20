@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -39,18 +40,23 @@ const Top10Menu = () => {
         return fetch(APIURL + '?apikey=' + APIKEY + '&s=' +search).then(res=>res.json());
     }
 
+    // Affichage du nom du film sur la console
+    const handlePressConsole = (movie) => console.log(movie);
+
+    // Affichage du nom du film sur la console
+    const handlePressAlert = (movie) => alert(movie);
 
   return (
     <>
           <Text style={styles.title}>Top 10 en Belgique aujourd'hui</Text>
           <ScrollView style={{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
             {movies.movies.map( m => 
-              <View style={styles.col} key={m.imdbID}>
+              <TouchableOpacity style={styles.col} key={m.imdbID} onPress={() => handlePressAlert(m.Title)}>
                 <View style={styles.cards}>
                   <Image style={{flex: 1, height: null, width: null, resizeMode: "cover"}} source={{uri: m.Poster}}/>
                 </View>
                 <Text style={{color: "lightgrey", fontSize: 12, marginTop: 8, fontWeight: "700"}}>{m.Title}</Text>
-              </View>
+              </TouchableOpacity>
             )}
           </ScrollView>
     </>

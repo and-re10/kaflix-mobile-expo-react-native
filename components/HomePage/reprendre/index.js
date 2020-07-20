@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -37,20 +38,25 @@ const ReprendreMenu = () => {
     function fetchMovie(search){
         return fetch(APIURL + '?apikey=' + APIKEY + '&s=' +search).then(res=>res.json());
     }
+    let name = "andré";
 
-    const handlepress = titre => console.log(titre)
+    // Affichage du nom du film sur la console
+    const handlePressConsole = (movie) => console.log(movie);
+
+    // Affichage du nom du film sur la console
+    const handlePressAlert = (movie) => alert("nom du film: " + movie);
 
   return (
     <>
-          <Text style={styles.title} onPress={handlepress(movies.Title)}>Reprendre avec André</Text>
+          <Text style={styles.title} onPress={() => handlePressConsole(movies[0].Title)}>Reprendre avec André</Text>
           <ScrollView style={{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {movies.map(m => 
-                <View style={styles.col} key={m.imdbID}>
+            {movies.map((m, i) => 
+                <TouchableOpacity style={styles.col} key={i} onPress={() => handlePressAlert(m.Title)}>
                     <View style={styles.cards}>
-                        <Image style={{flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 90, margin: 3}} source={{uri: m.Poster}} />
+                        <Image style={{flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 90, margin: 3}} source={{uri: m.Poster}}/>
                     </View>
                     <Text style={{color: "lightgrey", fontSize: 12, marginTop: 8, fontWeight: "700"}} >{m.Title}</Text>
-                </View>
+                </TouchableOpacity>
             )}
             
           </ScrollView>
